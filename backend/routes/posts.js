@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const {
 	getAllPosts,
 	getPostById,
@@ -9,11 +10,13 @@ const {
 const commentRouter = require('./comments')
 const router = express.Router();
 
+const requireAuth = passport.authenticate('jwt', {session:false})
+
 router.get('/', getAllPosts);
 router.get('/:postId', getPostById)
-router.post('/', createPost);
-router.put('/:postId', updatedPost)
-router.delete('/:postId', deletePost)
+router.post('/', requireAuth,createPost);
+router.put('/:postId',requireAuth, updatedPost)
+router.delete('/:postId',requireAuth, deletePost)
 
 router.use('/:postId/comments', commentRouter)
 
