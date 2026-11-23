@@ -17,6 +17,11 @@ router.post('/signup', async (req, res) => {
 			.status(201)
 			.json({ message: 'ユーザーを作成しました', userId: user.id });
 	} catch (error) {
+		if (error.code === 'P2002') {
+			return res
+				.status(409)
+				.json({ error: 'このユーザー名は既に使用されています' });
+		}Ï
 		res.status(400).json({ error: 'ユーザー登録に失敗しました' });
 	}
 });
