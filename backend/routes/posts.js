@@ -7,17 +7,26 @@ const {
 	updatedPost,
 	deletePost,
 } = require('../controllers/postController');
-const commentRouter = require('./comments')
+const commentRouter = require('./comments');
 const router = express.Router();
 
-const requireAuth = passport.authenticate('jwt', {session:false})
+const requireAuth = passport.authenticate('jwt', { session: false });
 
-router.get('/', getAllPosts);
-router.get('/:postId', getPostById)
-router.post('/', requireAuth,createPost);
-router.put('/:postId',requireAuth, updatedPost)
-router.delete('/:postId',requireAuth, deletePost)
+function optionalAuth(req, res, next) {
+	passport.authenticate('jwt', { session: false }, (err, user) => {
+		if (!err && user) {
+			req.user = user;
+		}
+		next();
+	})(req, res, next);
+}
 
-router.use('/:postId/comments', commentRouter)
+router.get('/', optionalAuth, getAllPosts);
+router.get('/:postId', optionalAuth, getPostById);
+router.post('/', requireAuth, createPost);
+router.put('/:postId', requireAuth, updatedPost);
+router.delete('/:postId', requireAuth, deletePost);
+
+router.use('/:postId/comments', commentRouter);
 
 module.exports = router;

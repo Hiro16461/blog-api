@@ -37,7 +37,7 @@ model Post {
 
 model Comment {
   id String @id @default(uuid())
-  authorName String
+  authorName String @default("匿名")
   content String
   createdAt DateTime @default(now())
 
