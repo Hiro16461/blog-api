@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "node --watch app.js",
-    "script": "node script.js"
+    "script": "npm install && node script.js"
   },
   "keywords": [],
   "author": "Zan Hiro",
