@@ -7,7 +7,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node app.js",
 		"dev": "node --watch app.js",
-		"script": "npm install && npx prisma7 generate && node script.js"
+		"script": "npm install && npx prisma7 generate && npx prisma7 migrate deploy && node script.js"
 	},
 	"keywords": [],
 	"author": "Zan Hiro",
